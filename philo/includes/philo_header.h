@@ -8,10 +8,13 @@
 # include <string.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <limits.h>
 
 //utils
 long    ft_atol(const char *nptr);
 size_t  ft_strlen(char *str);
+size_t  get_curr_time(void);
+size_t  transform_into_millisec(long time);
 
 //initialization
 t_all   *init_all(int argc, char **argv);
@@ -20,10 +23,16 @@ int     init_forks_and_philos(t_all *all);
 //finalization and errors writing
 void    write_err(char *str);
 void    free_all(t_all *all);
-void    mut_destroy_err(t_all *all, int ind);
+void    mut_destroy_err(t_all *all, long ind);
+void    philo_detach(t_all *all, long ind);
 
 //lexer
 int     check_intro_values(t_all *all, int argc);
 
-
+int     main_philo(t_all *all);
+int     check_if_dead(t_philo *philo, int is_locked);
+void    philo_think(t_philo *philo);
+void    philo_sleep(t_philo *philo);
+int     philo_try_to_eat(t_philo *philo);
+void    philo_eat(t_philo *philo);
 #endif

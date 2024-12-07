@@ -14,10 +14,12 @@ int main(int argc, char **argv)
         return (free_all(all), 1);
     if (init_forks_and_philos(all) == -1)
         return (free_all(all), 1);
-    if (argc == 5)
-        unlim_philo(all);
-    else if (argc == 6)
-        lim_philo(all);
+    main_philo(all);
+    if (all->is_dead == 1)
+        printf("Reason of finish: One or more philosophers are dead\n");
+    else if (argc == 6 && ((all->fin).num_philo_eaten == all->num_philos
+        || (all->fin).num_philo_eaten == 0))
+        printf("Reason of finish: All philosophers ate enough times\n");
     free_all(all);
     return (0);
 }
