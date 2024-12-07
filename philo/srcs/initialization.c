@@ -13,7 +13,7 @@ t_all   *init_all(int argc, char **argv)
         return (write_err("Malloc error"), NULL);
     all->forks = NULL;
     all->philos = NULL;
-    all->fin.num_philo_eaten = 0;
+    (all->fin).num_philo_eaten = 0;
     if (pthread_mutex_init(&(all->fin.mut), NULL) == -1)
         return (write_err("Impossible to init mutex"), free(all), NULL);
     if (pthread_mutex_init(&(all->mess), NULL) == -1)
@@ -54,7 +54,7 @@ static pthread_mutex_t *init_forks(t_all *all)
     while (++ind < all->num_philos)
     {
         if (pthread_mutex_init(&(ret[ind]), NULL) == -1)
-            return (write_err("Mutex init error"), mut_destroy_err(all, ind), NULL);
+            return (write_err("Mutex init error"), mut_destroy(ret, ind), free(ret), NULL);
     }
     return (ret);
 }

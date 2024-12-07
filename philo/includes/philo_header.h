@@ -22,9 +22,9 @@ int     init_forks_and_philos(t_all *all);
 
 //finalization and errors writing
 void    write_err(char *str);
-void    free_all(t_all *all);
-void    mut_destroy_err(t_all *all, long ind);
-void    philo_detach(t_all *all, long ind);
+void    free_all(t_all *all, int destroy_forks, int detach_th);
+void    mut_destroy(pthread_mutex_t *forks, long stop_at);
+void    detach_thread(t_all *all, long stop_at);
 
 //lexer
 int     check_intro_values(t_all *all, int argc);

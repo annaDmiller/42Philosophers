@@ -5,24 +5,25 @@ static int check_lim_meals(t_philo *philo);
 
 int main_philo(t_all *all)
 {
-    printf("TEST: main philo\n");
     long ind;
     size_t  start;
 
     ind = -1;
+    start = get_curr_time();
     while (++ind < all->num_philos)
     {
+        (all->philos[ind]).start = start;
+        (all->philos[ind]).last_meal = start;
         if (pthread_create(&((all->philos[ind]).thread),
             NULL, philo, (void *) &(all->philos[ind])) != 0)
             return (write_err("Thread creation failed"), -1);
     }
     ind = -1;
-    start = get_curr_time();
     while (++ind < all->num_philos)
     {
-        all->philos[ind].start = start;
-        all->philos[ind].last_meal = start;
-        pthread_join((all->philos[ind]).thread, NULL);
+        if (pthread_join((all->philos[ind]).thread, NULL) != 0)
+            return (write_err("Error in thread joining"), detach_thread(all, ind), -1);
+        //usleep(200); - need to create solution to avoid deadlock
     }
     return (0);
 }
@@ -34,7 +35,7 @@ static void    *philo(void *arg)
     philo = (t_philo *) arg;
     if (philo->lim_meals == 0)
         return (NULL);
-    while (philo->state != DEAD)
+    while (philo->state != DEAD && *(philo->dead) == 0)
     {
         if (philo->lim_meals != -1)
             if (check_lim_meals(philo) == 1)
@@ -61,10 +62,11 @@ static int check_lim_meals(t_philo *philo)
     check = 0;
     if (philo->meals_eaten < philo->lim_meals)
         return (0);
-    if (philo->lim_meals == 0)
     pthread_mutex_lock(philo->lim_eat_mut);
     if (check_if_dead(philo, 0) == 1)
         return (pthread_mutex_unlock(philo->lim_eat_mut), 1);
+    if (philo->meals_eaten == philo->lim_meals && philo->state == SLEEP)
+        (*(philo->lim_eat_done))++;
     if (*(philo->lim_eat_done) == philo->num_philos)
         check = 1;
     pthread_mutex_unlock(philo->lim_eat_mut);

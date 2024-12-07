@@ -35,7 +35,9 @@ void    philo_eat(t_philo *philo)
     usleep(philo->to_eat);
     philo->state = SLEEP;
     philo->meals_eaten++;
-    pthread_mutex_unlock(philo->l_fork_mut);
     pthread_mutex_unlock(philo->r_fork_mut);
+    if (philo->num_philos == 1)
+        return ;
+    pthread_mutex_unlock(philo->l_fork_mut);
     return ;
 }
