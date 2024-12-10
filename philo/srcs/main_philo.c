@@ -16,14 +16,15 @@ int	main_philo(t_all *all)
 		(all->philos[ind]).last_meal = start;
 		if (pthread_create(&((all->philos[ind]).thread),
 				NULL, philo, (void *) &(all->philos[ind])) != 0)
-			return (write_err("Thread creation failed"), -1);
+			return (write_err("Thread creation failed"),
+				detach_thread(all, 0, ind), -1);
 	}
 	ind = -1;
 	while (++ind < all->num_philos)
 	{
 		if (pthread_join((all->philos[ind]).thread, NULL) != 0)
 			return (write_err("Error in thread joining"),
-				detach_thread(all, ind), -1);
+				detach_thread(all, ind, all->num_philos), -1);
 	}
 	return (0);
 }
