@@ -23,7 +23,6 @@ int main_philo(t_all *all)
     {
         if (pthread_join((all->philos[ind]).thread, NULL) != 0)
             return (write_err("Error in thread joining"), detach_thread(all, ind), -1);
-        //usleep(200); - need to create solution to avoid deadlock
     }
     return (0);
 }
@@ -79,6 +78,8 @@ int check_if_dead(t_philo *philo, int is_locked)
         return (0);
     if (is_locked == 0)
         pthread_mutex_lock(philo->mess_mut);
+    if (*(philo->dead) == 1)
+        return (pthread_mutex_unlock(philo->mess_mut), 1);
     printf("%lu %li died\n", get_curr_time(), philo->ind_philo);
     *(philo->dead) = 1;
     pthread_mutex_unlock(philo->mess_mut);

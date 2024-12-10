@@ -8,6 +8,6 @@ void    philo_sleep(t_philo *philo)
     printf("%lu %li is sleeping\n", get_curr_time(), philo->ind_philo);
     pthread_mutex_unlock(philo->mess_mut);
     philo->state = THINK;
-    usleep(philo->to_sleep);
+    usleep(philo->to_sleep * 1000);
     return ;
 }

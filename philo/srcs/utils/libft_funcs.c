@@ -23,3 +23,22 @@ long    ft_atol(const char *nptr)
 	}
 	return (sign * number);
 }
+
+size_t  ft_strlen(char *str)
+{
+    size_t  ind;
+
+    if (!str)
+        return (0);
+    ind = 0;
+    while (str[ind])
+        ind++;
+    return (ind);
+}
+
+int ft_isdigit(char car)
+{
+    if (car >= '0' && car <= '9')
+        return (1);
+    return (0);
+}

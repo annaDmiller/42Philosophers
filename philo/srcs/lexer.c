@@ -11,3 +11,22 @@ int check_intro_values(t_all *all, int argc)
             -1);
     return (0);
 }
+
+int validate_args(int argc, char **argv)
+{
+    int ind_arg;
+    int ind_car;
+
+    ind_arg = 0;
+    while (++ind_arg < argc)
+    {
+        ind_car = 0;
+        while (argv[ind_arg][ind_car])
+        {
+            if (!ft_isdigit(argv[ind_arg][ind_car]))
+                return (0);
+            ind_car++;
+        }
+    }
+    return (1);
+}

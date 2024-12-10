@@ -7,6 +7,8 @@ int main(int argc, char **argv)
     if (argc < 5 || argc > 6)
         return (write_err("You need to input 4 or 5 arguements"), 1);
     all = NULL;
+    if (!validate_args(argc, argv))
+        return (write_err("Incorrect input values. Please, double check them"), 1);
     all = init_all(argc, argv);
     if (!all)
         return (1);

@@ -17,8 +17,7 @@ SRCS +=	./srcs/actions_philos/eat.c \
 		./srcs/actions_philos/sleep.c \
 		./srcs/actions_philos/think.c \
 
-SRCS +=	./srcs/utils/ft_atol.c \
-		./srcs/utils/ft_strlen.c \
+SRCS +=	./srcs/utils/libft_funcs.c \
 		./srcs/utils/time.c \
 
 SRCS +=	./srcs/finalization/error.c \

@@ -15,6 +15,7 @@ long    ft_atol(const char *nptr);
 size_t  ft_strlen(char *str);
 size_t  get_curr_time(void);
 size_t  transform_into_millisec(long time);
+int     ft_isdigit(char car);
 
 //initialization
 t_all   *init_all(int argc, char **argv);
@@ -28,6 +29,7 @@ void    detach_thread(t_all *all, long stop_at);
 
 //lexer
 int     check_intro_values(t_all *all, int argc);
+int validate_args(int argc, char **argv);
 
 int     main_philo(t_all *all);
 int     check_if_dead(t_philo *philo, int is_locked);
