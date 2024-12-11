@@ -32,7 +32,8 @@ int	check_if_to_die(t_philo *philo, int is_locked)
 		return (0);
 	pthread_mutex_lock(philo->dead_mut);
 	if (*philo->dead == 1)
-		return (pthread_mutex_unlock(philo->dead_mut), 1);
+		return (pthread_mutex_unlock(philo->dead_mut),
+            pthread_mutex_unlock(philo->mess_mut), 1);
 	*philo->dead = 1;
 	pthread_mutex_unlock(philo->dead_mut);
 	if (is_locked == 0)
