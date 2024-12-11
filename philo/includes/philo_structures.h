@@ -48,6 +48,7 @@ typedef struct s_philo
 	pthread_mutex_t	*lim_eat_mut;
 	pthread_mutex_t	*r_fork_mut;
 	pthread_mutex_t	*l_fork_mut;
+	pthread_mutex_t	*dead_mut;
 }					t_philo;
 
 typedef struct s_all
@@ -61,6 +62,7 @@ typedef struct s_all
 	long			num_eat;
 	int				is_dead;
 	pthread_mutex_t	mess;
+	pthread_mutex_t	dead;
 	t_fin			fin;
 }					t_all;
 

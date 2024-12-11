@@ -16,33 +16,6 @@ static pthread_mutex_t	*init_forks(t_all *all);
 static t_philo			*init_philos(t_all *all);
 static void				init_l_r_forks(t_all *all, long ind, t_philo *philo);
 
-t_all	*init_all(int argc, char **argv)
-{
-	t_all	*all;
-
-	all = (t_all *) malloc(sizeof(t_all));
-	if (!all)
-		return (write_err("Malloc error"), NULL);
-	all->forks = NULL;
-	all->philos = NULL;
-	(all->fin).num_philo_eaten = 0;
-	if (pthread_mutex_init(&(all->fin.mut), NULL) == -1)
-		return (write_err("Impossible to init mutex"), free(all), NULL);
-	if (pthread_mutex_init(&(all->mess), NULL) == -1)
-		return (write_err("Impossible to init mutex"),
-			pthread_mutex_destroy(&(all->fin.mut)), free(all), NULL);
-	all->is_dead = 0;
-	all->num_philos = ft_atol(argv[1]);
-	all->to_die = ft_atol(argv[2]);
-	all->to_eat = ft_atol(argv[3]);
-	all->to_sleep = ft_atol (argv[4]);
-	if (argc == 5)
-		all->num_eat = -1;
-	else if (argc == 6)
-		all->num_eat = ft_atol(argv[5]);
-	return (all);
-}
-
 int	init_forks_and_philos(t_all *all)
 {
 	all->forks = init_forks(all);
@@ -112,5 +85,6 @@ static void	init_l_r_forks(t_all *all, long ind, t_philo *philo)
 	}
 	philo[ind].r_fork_mut = &(all->forks[ind]);
 	philo[ind].num_philos = all->num_philos;
+	philo[ind].dead_mut = &(all->dead);
 	return ;
 }
