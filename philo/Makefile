@@ -9,6 +9,7 @@ RM = rm
 RM_FLAGS = -f
 
 SRCS = 	./srcs/initialization.c \
+		./srcs/initialization_all_struct.c \
 		./srcs/lexer.c \
 		./srcs/main_philo.c \
 		./srcs/main.c \
@@ -16,6 +17,7 @@ SRCS = 	./srcs/initialization.c \
 SRCS +=	./srcs/actions_philos/eat.c \
 		./srcs/actions_philos/sleep.c \
 		./srcs/actions_philos/think.c \
+		./srcs/actions_philos/dead_functions.c \
 
 SRCS +=	./srcs/utils/libft_funcs.c \
 		./srcs/utils/time.c \

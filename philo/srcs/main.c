@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 		return (free_all(all, 0), 1);
 	if (main_philo(all) == -1)
 		return (free_all(all, 1), 1);
-	if (all->is_dead == 1)
+	if (all->dead.is_dead == 1)
 		printf("Reason of finish: One or more philosophers are dead\n");
 	else if (argc == 6 && ((all->fin).num_philo_eaten == all->num_philos
 			|| (all->fin).num_philo_eaten == 0))
