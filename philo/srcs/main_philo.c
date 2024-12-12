@@ -12,36 +12,9 @@
 
 #include "../includes/philo_header.h"
 
-static void	*philo(void *arg);
 static int	check_lim_meals(t_philo *philo);
 
-int	main_philo(t_all *all)
-{
-	long	ind;
-	size_t	start;
-
-	ind = -1;
-	start = get_curr_time();
-	while (++ind < all->num_philos)
-	{
-		(all->philos[ind]).start = start;
-		(all->philos[ind]).last_meal = start;
-		if (pthread_create(&((all->philos[ind]).thread),
-				NULL, philo, (void *) &(all->philos[ind])) != 0)
-			return (write_err("Thread creation failed"),
-				detach_thread(all, 0, ind), -1);
-	}
-	ind = -1;
-	while (++ind < all->num_philos)
-	{
-		if (pthread_join((all->philos[ind]).thread, NULL) != 0)
-			return (write_err("Error in thread joining"),
-				detach_thread(all, ind, all->num_philos), -1);
-	}
-	return (0);
-}
-
-static void	*philo(void *arg)
+void	*philo(void *arg)
 {
 	t_philo	*philo;
 

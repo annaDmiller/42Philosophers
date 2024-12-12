@@ -12,6 +12,8 @@
 
 #include "../includes/philo_header.h"
 
+static int	run_program(t_all *all);
+
 int	main(int argc, char **argv)
 {
 	struct s_all	*all;
@@ -28,13 +30,39 @@ int	main(int argc, char **argv)
 		return (free_all(all, 0), 1);
 	if (init_forks_and_philos(all) == -1)
 		return (free_all(all, 0), 1);
-	if (main_philo(all) == -1)
+	if (run_program(all) == -1)
 		return (free_all(all, 1), 1);
 	if (all->is_dead == 1)
 		printf("Reason of finish: One or more philosophers are dead\n");
 	else if (argc == 6 && ((all->fin).num_philo_eaten == all->num_philos
-			|| (all->fin).num_philo_eaten == 0))
+			|| all->num_eat == 0))
 		printf("Reason of finish: All philosophers ate enough times\n");
 	free_all(all, 1);
+	return (0);
+}
+
+static int	run_program(t_all *all)
+{
+	long	ind;
+	size_t	start;
+
+	ind = -1;
+	start = get_curr_time();
+	while (++ind < all->num_philos)
+	{
+		(all->philos[ind]).start = start;
+		(all->philos[ind]).last_meal = start;
+		if (pthread_create(&((all->philos[ind]).thread),
+				NULL, philo, (void *) &(all->philos[ind])) != 0)
+			return (write_err("Thread creation failed"),
+				detach_thread(all, 0, ind), -1);
+	}
+	ind = -1;
+	while (++ind < all->num_philos)
+	{
+		if (pthread_join((all->philos[ind]).thread, NULL) != 0)
+			return (write_err("Error in thread joining"),
+				detach_thread(all, ind, all->num_philos), -1);
+	}
 	return (0);
 }

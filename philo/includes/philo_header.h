@@ -43,7 +43,7 @@ void	detach_thread(t_all *all, long start_at, long stop_at);
 int		check_intro_values(t_all *all, int argc);
 int		validate_args(int argc, char **argv);
 
-int		main_philo(t_all *all);
+void	*philo(void *arg);
 int		check_if_to_die(t_philo *philo, int is_locked);
 int		check_if_any_dead(t_philo *philo);
 void	philo_think(t_philo *philo);

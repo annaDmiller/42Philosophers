@@ -20,7 +20,7 @@ int	init_forks_and_philos(t_all *all)
 {
 	all->forks = init_forks(all);
 	if (!all->forks)
-		return (write_err("Malloc error"), -1);
+		return (-1);
 	all->philos = init_philos(all);
 	if (!all->philos)
 		return (write_err("Malloc error"), -1);
@@ -34,7 +34,7 @@ static pthread_mutex_t	*init_forks(t_all *all)
 
 	ret = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * all->num_philos);
 	if (!ret)
-		return (NULL);
+		return (write_err("Malloc error"), NULL);
 	ind = -1;
 	while (++ind < all->num_philos)
 	{
@@ -52,7 +52,7 @@ static t_philo	*init_philos(t_all *all)
 
 	ret_arr = (t_philo *) malloc(all->num_philos * sizeof(t_philo));
 	if (!ret_arr)
-		return (NULL);
+		return (write_err("Malloc error"), NULL);
 	ind = -1;
 	while (++ind < all->num_philos)
 	{
