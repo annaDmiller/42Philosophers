@@ -27,4 +27,7 @@ int	    ft_isdigit(char car);
 size_t	get_curr_time(void);
 size_t	transform_into_millisec(long time);
 
+void    philo_sleep(t_philo *philo, long ind);
+void    philo_think(t_philo *philo, long ind);
+
 #endif

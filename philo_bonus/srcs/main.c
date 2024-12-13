@@ -43,6 +43,10 @@ static int	run_program(t_all *all)
 			//all.
 		}
 		else if (pid == 0)
-			philo(all, ind);
+		{
+			philo(all->philo, ind + 1);
+			free_all(all, 1);
+			exit(0);
+		}
 	}
 }

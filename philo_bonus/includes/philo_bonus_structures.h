@@ -30,8 +30,6 @@ typedef struct s_philo
 	sem_t	*dead_sem;
 	sem_t	*meals_sem;
 	sem_t	*forks_sem;
-	int		*is_dead;
-	long	*meals_eaten;
 }		t_philo;
 
 typedef struct s_all
