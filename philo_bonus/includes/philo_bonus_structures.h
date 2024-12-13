@@ -17,25 +17,27 @@ typedef enum state
 
 typedef struct s_philo
 {
-	size_t	start;
-	size_t	last_meal;
-	size_t	to_die;
-	size_t	to_sleep;
-	size_t	to_eat;
-	long	num_philos;
-	long	num_meals;
-	t_state	state;
-	long	meals_eaten;
-	sem_t	*mess_sem;
-	sem_t	*dead_sem;
-	sem_t	*meals_sem;
-	sem_t	*forks_sem;
+	size_t		start;
+	size_t		last_meal;
+	size_t		to_die;
+	size_t		to_sleep;
+	size_t		to_eat;
+	long		num_philos;
+	long		num_meals;
+	t_state		state;
+	long		meals_eaten;
+	long		ind;
+	sem_t		*mess_sem;
+	sem_t		*dead_sem;
+	sem_t		*meals_sem;
+	sem_t		*forks_sem;
 }		t_philo;
 
 typedef struct s_all
 {
 	sem_t			*forks;
 	struct s_philo	*philo;
+	pid_t			*pid_philo;
 	long			to_sleep;
 	long			to_eat;
 	long			num_philos;

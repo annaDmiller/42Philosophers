@@ -2,11 +2,17 @@
 
 int	philo(t_philo *philo, long ind)
 {
+	pthread_t	check_stop;
+
     if (philo->num_meals == 0)
         return (0);
 	if (open_sems(philo) == -1)
 		return (-1);
-    while (1)
+	philo->ind = ind;
+	if (pthread_create(&check_stop, NULL, check_stop, (void *) philo))
+		return (-1);
+	pthread_detach(check_stop);
+    while (philo->state != DEAD)
     {
         if (philo->state == EAT)
 		{
@@ -17,8 +23,8 @@ int	philo(t_philo *philo, long ind)
 			philo_sleep(philo, ind);
 		else if (philo->state == THINK)
 			philo_think(philo, ind);
-
     }
+	return (0);
 }
 
 static int	open_sems(t_philo *philo)

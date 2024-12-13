@@ -9,8 +9,6 @@ t_all   *init_all_struct(int argc, char **argv)
     all = (t_all *) malloc(sizeof(t_all));
     if (!all)
         return (write_err("Malloc error"), NULL);
-    if (init_sema_all(all) == -1)
-        return (free(all), NULL);
     all->forks = NULL;
     all->philo = NULL;
     all->num_philos  = ft_atol(argv[1]);
@@ -23,6 +21,11 @@ t_all   *init_all_struct(int argc, char **argv)
         all->num_eat = ft_atol(argv[5]);
     all->philo_meals = 0;
     all->is_dead = 0;
+    all->pid_philo = (pid_t *) malloc(sizeof(pid_t) * all->num_philos);
+    if (!all->pid_philo)
+        return (write_err("Malloc error"), free(all), NULL);
+    if (init_sema_all(all) == -1)
+        return (free(all->pid_philo), free(all), NULL);
     return (all);
 }
 

@@ -27,24 +27,25 @@ int	main(int argc, char **argv)
 static int	run_program(t_all *all)
 {
 	long	ind;
-	pid_t	pid;
+	int		status;
 
 	ind = -1;
 	all->philo->start = get_curr_time();
 	all->philo->last_meal = all->philo->start;
+	status = 0;
 	while (++ind < all->num_philos)
 	{
-		pid = fork();
-		if (pid < 0)
+		all->pid_philo[ind] = fork();
+		if (all->pid_philo[ind] < 0)
 		{
 			sem_wait(all->mess_sem);
 			write_err("Can't create a child process");
 			sem_post(all->mess_sem);
 			//all.
 		}
-		else if (pid == 0)
+		else if (all->pid_philo[ind] == 0)
 		{
-			philo(all->philo, ind + 1);
+			status = philo(all->philo, ind + 1);
 			free_all(all, 1);
 			exit(0);
 		}
