@@ -37,10 +37,17 @@ static int  init_sema_all(t_all *all)
     all->dead_sem = sem_open(DEATH, O_CREAT | O_EXCL, 0644, 0);
     if (all->dead_sem == SEM_FAILED)
         return (write_err("Open semaphore failed"),
-            sem_unlink(MESS), -1);
-    all->meals_sem = sem_open(MEALS, O_CREAT | O_EXCL, 0644, all->num_philos);
+            sem_close(all->mess_sem), sem_unlink(MESS), -1);
+    all->meals_sem = sem_open(MEALS, O_CREAT | O_EXCL, 0644, 0);
     if (all->meals_sem == SEM_FAILED)
         return (write_err("Open semaphore failed"),
-            sem_unlink(MESS), sem_unlink(DEATH), -1);
+            sem_close(all->mess_sem), sem_unlink(MESS),
+            sem_close(all->dead_sem), sem_unlink(DEATH), -1);
+    all->stop_sem = sem_open(END, O_CREAT | O_EXCL, 0644, 0);
+    if (all->stop_sem == SEM_FAILED)
+        return (write_err("Open semaphore failed"),
+            sem_close(all->mess_sem), sem_unlink(MESS),
+            sem_close(all->dead_sem), sem_unlink(DEATH),
+            sem_close(all->meals_sem), sem_unlink(MEALS), -1);
     return (0);
 }

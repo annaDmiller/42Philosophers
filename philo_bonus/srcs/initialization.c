@@ -1,6 +1,7 @@
 #include "../includes/philo_bonus_header.h"
 
 static sem_t    *init_forks(t_all *all);
+static t_philo  *init_philos(t_all *all);
 
 int init_forks_and_philos(t_all *all)
 {

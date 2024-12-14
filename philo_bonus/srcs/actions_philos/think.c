@@ -2,10 +2,11 @@
 
 void    philo_think(t_philo *philo, long ind)
 {
-    sem_wait(MESS);
-    //check_death
+    sem_wait(philo->mess_sem);
+    if (check_if_dead(philo, ind, 0) == -1)
+        return ;
     printf("%lu %li is thinking\n", get_curr_time(), ind);
-    sem_post(MESS);
+    sem_post(philo->mess_sem);
     philo->state = EAT;
     usleep(1000);
     return ;
