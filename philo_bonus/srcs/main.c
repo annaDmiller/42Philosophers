@@ -13,6 +13,7 @@ int	main(int argc, char **argv)
 	all = NULL;
 	if (!validate_args(argc, argv))
 		return (1);
+	unlink_sems();
 	all = init_all_struct(argc, argv);
 	if (!all)
 		return (1);
@@ -70,9 +71,7 @@ static int	wait_end(t_all *all, pid_t check_stop)
 	while (++ind < all->num_philos)
 		kill(all->pid_philo[ind], SIGKILL);
 	kill(check_stop, SIGKILL);
-	sem_wait(all->mess_sem);
 	printf("Simulation is stopped\n");
-	sem_post(all->mess_sem);
 	return (0);
 }
 

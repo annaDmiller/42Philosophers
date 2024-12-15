@@ -47,6 +47,12 @@ static int	open_sems(t_philo *philo)
 			sem_close(philo->dead_sem), 
 			sem_close(philo->forks_sem), 
 			sem_close(philo->mess_sem), -1);
+	philo->limit_sem = sem_open(LIMITER, 0);
+	if (philo->meals_sem == SEM_FAILED)
+		return (write_err("Impossible to open sema"), 
+			sem_close(philo->dead_sem), sem_close(philo->mess_sem),
+			sem_close(philo->forks_sem), 
+			sem_close(philo->meals_sem), -1);
 	return (0);
 }
 

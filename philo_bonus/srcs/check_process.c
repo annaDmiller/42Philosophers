@@ -29,6 +29,7 @@ static void *check_death(void *arg)
     death = sem_open(DEATH, 0);
     end = sem_open(END, 0);
     sem_wait(death);
+    printf("One or more philosophers died\n");
     sem_post(end);
     sem_close(death);
     sem_close(end);
@@ -49,7 +50,10 @@ static void *check_meals(void *arg)
     while (++ind < all->num_philos)
         sem_wait(meals);
     if (ind == all->num_philos)
+    {
+        printf("Philosophers ate enough time\n");
         sem_post(end);
+    }
     sem_close(meals);
     sem_close(end);
     return (NULL);

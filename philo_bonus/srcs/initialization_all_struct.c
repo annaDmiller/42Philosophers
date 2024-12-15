@@ -11,6 +11,7 @@ t_all   *init_all_struct(int argc, char **argv)
         return (write_err("Malloc error"), NULL);
     all->forks = NULL;
     all->philo = NULL;
+    all->ph_limit_sem = NULL;
     all->num_philos  = ft_atol(argv[1]);
     all->to_die = ft_atol(argv[2]);
     all->to_eat = ft_atol(argv[3]);
@@ -31,21 +32,21 @@ t_all   *init_all_struct(int argc, char **argv)
 
 static int  init_sema_all(t_all *all)
 {
-    all->mess_sem = sem_open(MESS, O_CREAT | O_EXCL, 0644, 1);
+    all->mess_sem = sem_open(MESS, O_CREAT, 0644, 1);
     if (all->mess_sem == SEM_FAILED)
-        return (write_err("Open semaphore failed"), -1);
-    all->dead_sem = sem_open(DEATH, O_CREAT | O_EXCL, 0644, 0);
+        return (write_err("Open message sema failed"), -1);
+    all->dead_sem = sem_open(DEATH, O_CREAT, 0644, 0);
     if (all->dead_sem == SEM_FAILED)
-        return (write_err("Open semaphore failed"),
+        return (write_err("Open death sema failed"),
             sem_close(all->mess_sem), sem_unlink(MESS), -1);
-    all->meals_sem = sem_open(MEALS, O_CREAT | O_EXCL, 0644, 0);
+    all->meals_sem = sem_open(MEALS, O_CREAT, 0644, 0);
     if (all->meals_sem == SEM_FAILED)
-        return (write_err("Open semaphore failed"),
+        return (write_err("Open meals sema failed"),
             sem_close(all->mess_sem), sem_unlink(MESS),
             sem_close(all->dead_sem), sem_unlink(DEATH), -1);
-    all->stop_sem = sem_open(END, O_CREAT | O_EXCL, 0644, 0);
+    all->stop_sem = sem_open(END, O_CREAT, 0644, 0);
     if (all->stop_sem == SEM_FAILED)
-        return (write_err("Open semaphore failed"),
+        return (write_err("Open stop sema failed"),
             sem_close(all->mess_sem), sem_unlink(MESS),
             sem_close(all->dead_sem), sem_unlink(DEATH),
             sem_close(all->meals_sem), sem_unlink(MEALS), -1);

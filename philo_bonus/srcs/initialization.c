@@ -2,11 +2,15 @@
 
 static sem_t    *init_forks(t_all *all);
 static t_philo  *init_philos(t_all *all);
+static sem_t    *init_limit(t_all *all);
 
 int init_forks_and_philos(t_all *all)
 {
     all->forks = init_forks(all);
     if (!all->forks)
+        return (-1);
+    all->ph_limit_sem = init_limit(all);
+    if (!all->ph_limit_sem)
         return (-1);
     all->philo = init_philos(all);
     if (!all->philo)
@@ -18,9 +22,22 @@ static sem_t    *init_forks(t_all *all)
 {
     sem_t   *ret;
 
-    ret = sem_open(FORKS, O_CREAT | O_EXCL, 0644, all->num_philos);
+    ret = sem_open(FORKS, O_CREAT, 0644, all->num_philos);
     if (ret == SEM_FAILED)
-        return (write_err("Open sema failed"), NULL);
+        return (write_err("Open forks sema failed"), NULL);
+    return (ret);
+}
+
+static sem_t    *init_limit(t_all *all)
+{
+    sem_t   *ret;
+
+    if (all->num_philos == 1)
+        ret = sem_open(LIMITER, O_CREAT, 0644, 1);
+    else
+        ret = sem_open(LIMITER, O_CREAT, 0644, all->num_philos - 1);
+    if (ret == SEM_FAILED)
+        return (write_err("Open limiter sema failed"), NULL);
     return (ret);
 }
 

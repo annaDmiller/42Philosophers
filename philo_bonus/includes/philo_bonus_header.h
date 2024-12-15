@@ -21,6 +21,7 @@ int     init_forks_and_philos(t_all *all);
 
 void	write_err(char *str);
 void    free_all(t_all *all, int unlink_sem);
+void    unlink_sems(void);
 
 long	ft_atol(const char *nptr);
 size_t	ft_strlen(char *str);

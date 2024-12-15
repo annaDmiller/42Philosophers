@@ -11,6 +11,5 @@ int	check_if_dead(t_philo *philo, long ind, int is_locked)
     philo->state = DEAD;
     printf("%lu %li died\n", get_curr_time(), ind);
     sem_post(philo->dead_sem);
-    sem_post(philo->mess_sem);
     return (-1);
 }
