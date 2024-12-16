@@ -16,14 +16,16 @@ static int	check_lim_meals(t_philo *philo);
 
 void	*philo(void *arg)
 {
-	t_philo	*philo;
+	t_philo		*philo;
+	pthread_t	check_death;
 
 	philo = (t_philo *) arg;
 	if (philo->lim_meals == 0)
 		return (NULL);
+	pthread_create(&check_death, NULL, death_checker, arg);
 	while (1)
 	{
-		if (check_if_any_dead(philo) == 1)
+		if (check_if_any_dead(philo, 0) == 1)
 			break ;
 		if (philo->lim_meals != -1)
 			if (check_lim_meals(philo) == 1)
@@ -37,10 +39,8 @@ void	*philo(void *arg)
 			philo_sleep(philo);
 		else if (philo->state == THINK)
 			philo_think(philo);
-		if (check_if_to_die(philo, 0) == 1)
-			break ;
 	}
-	return (NULL);
+	return (pthread_join(check_death, NULL), NULL);
 }
 
 static int	check_lim_meals(t_philo *philo)
