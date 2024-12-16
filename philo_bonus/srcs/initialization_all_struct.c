@@ -50,5 +50,12 @@ static int  init_sema_all(t_all *all)
             sem_close(all->mess_sem), sem_unlink(MESS),
             sem_close(all->dead_sem), sem_unlink(DEATH),
             sem_close(all->meals_sem), sem_unlink(MEALS), -1);
+    all->block_sem = sem_open(BLOCK, O_CREAT, 0644, 1);
+    if (all->block_sem == SEM_FAILED)
+        return (write_err("Open stop sema failed"),
+            sem_close(all->mess_sem), sem_unlink(MESS),
+            sem_close(all->stop_sem), sem_unlink(END),
+            sem_close(all->dead_sem), sem_unlink(DEATH),
+            sem_close(all->meals_sem), sem_unlink(MEALS), -1);
     return (0);
 }

@@ -6,6 +6,7 @@
 # define MEALS "/meals_sem"
 # define FORKS "/forks_sem"
 # define LIMITER "/limit_sem"
+# define BLOCK "/block_sem"
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -44,6 +45,7 @@ typedef struct s_philo
 	sem_t		*meals_sem;
 	sem_t		*forks_sem;
 	sem_t		*limit_sem;
+	sem_t		*block_sem;
 }		t_philo;
 
 typedef struct s_all
@@ -63,6 +65,7 @@ typedef struct s_all
 	sem_t			*meals_sem;
 	sem_t			*stop_sem;
 	sem_t			*ph_limit_sem;
+	sem_t			*block_sem;
 }					t_all;
 
 #endif
