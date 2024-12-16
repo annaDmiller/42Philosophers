@@ -40,6 +40,8 @@ void	*death_checker(void *arg)
 			continue ;
 		}
 		pthread_mutex_unlock(&(philo->time_mut));
+		if (check_lim_meals(philo, 0) == 1)
+			return (NULL);
 		pthread_mutex_lock(philo->dead_mut);
 		if (*philo->dead == 1)
 			return (pthread_mutex_unlock(philo->dead_mut), NULL);
@@ -49,7 +51,6 @@ void	*death_checker(void *arg)
 		printf("%lu %li died\n", get_curr_time(), philo->ind_philo);
 		pthread_mutex_unlock(philo->mess_mut);
 		philo->state = DEAD;
-		break ;
 	}
 	return (NULL);
 }

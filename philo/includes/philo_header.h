@@ -45,6 +45,7 @@ int		validate_args(int argc, char **argv);
 
 void	*philo(void *arg);
 int		check_if_any_dead(t_philo *philo, int mess_locked);
+int		check_lim_meals(t_philo *philo, int addit_check);
 void	philo_think(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 int		philo_try_to_eat(t_philo *philo);

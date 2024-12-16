@@ -12,8 +12,6 @@
 
 #include "../includes/philo_header.h"
 
-static int	check_lim_meals(t_philo *philo);
-
 void	*philo(void *arg)
 {
 	t_philo		*philo;
@@ -27,7 +25,7 @@ void	*philo(void *arg)
 	{
 		if (check_if_any_dead(philo, 0) == 1)
 			break ;
-		if (philo->lim_meals != -1 && check_lim_meals(philo) == 1)
+		if (philo->lim_meals != -1 && check_lim_meals(philo, 1) == 1)
 			break ;
 		if (philo->state == EAT)
 		{
@@ -43,7 +41,7 @@ void	*philo(void *arg)
 	return (NULL);
 }
 
-static int	check_lim_meals(t_philo *philo)
+int	check_lim_meals(t_philo *philo, int addit_check)
 {
 	int	check;
 
@@ -51,9 +49,10 @@ static int	check_lim_meals(t_philo *philo)
 	if (philo->meals_eaten < philo->lim_meals)
 		return (0);
 	pthread_mutex_lock(philo->lim_eat_mut);
-	if (check_if_any_dead(philo, 0) == 1)
+	if (addit_check == 1 && check_if_any_dead(philo, 0) == 1)
 		return (pthread_mutex_unlock(philo->lim_eat_mut), 1);
-	if (philo->meals_eaten == philo->lim_meals && philo->state == SLEEP)
+	if (addit_check == 1 && philo->meals_eaten == philo->lim_meals
+		&& philo->state == SLEEP)
 		(*(philo->lim_eat_done))++;
 	if (*(philo->lim_eat_done) == philo->num_philos)
 		check = 1;
