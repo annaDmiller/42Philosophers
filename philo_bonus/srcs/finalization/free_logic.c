@@ -36,6 +36,8 @@ static void clean_philo(t_philo *philo)
         sem_close(philo->meals_sem);
     if (philo->forks_sem)
         sem_close(philo->forks_sem);
+    if (philo->limit_sem)
+        sem_close(philo->limit_sem);
     free(philo);
     return ;
 }

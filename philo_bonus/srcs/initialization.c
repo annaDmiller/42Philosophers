@@ -57,5 +57,10 @@ static t_philo  *init_philos(t_all *all)
     ret->to_die = transform_into_millisec(all->to_die);
     ret->to_eat = transform_into_millisec(all->to_eat);
     ret->to_sleep = transform_into_millisec(all->to_sleep);
+    ret->dead_sem = NULL;
+    ret->forks_sem = NULL;
+    ret->limit_sem = NULL;
+    ret->meals_sem = NULL;
+    ret->mess_sem = NULL;
     return (ret);
 }
