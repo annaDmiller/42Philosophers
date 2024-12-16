@@ -86,5 +86,6 @@ static void	init_l_r_forks(t_all *all, long ind, t_philo *philo)
 	philo[ind].r_fork_mut = &(all->forks[ind]);
 	philo[ind].num_philos = all->num_philos;
 	philo[ind].dead_mut = &(all->dead);
+	pthread_mutex_init(&(philo[ind].time_mut), NULL);
 	return ;
 }

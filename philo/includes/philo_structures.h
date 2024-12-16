@@ -49,6 +49,7 @@ typedef struct s_philo
 	pthread_mutex_t	*r_fork_mut;
 	pthread_mutex_t	*l_fork_mut;
 	pthread_mutex_t	*dead_mut;
+	pthread_mutex_t	time_mut;
 }					t_philo;
 
 typedef struct s_all

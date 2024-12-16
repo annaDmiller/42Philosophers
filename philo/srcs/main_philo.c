@@ -27,9 +27,8 @@ void	*philo(void *arg)
 	{
 		if (check_if_any_dead(philo, 0) == 1)
 			break ;
-		if (philo->lim_meals != -1)
-			if (check_lim_meals(philo) == 1)
-				break ;
+		if (philo->lim_meals != -1 && check_lim_meals(philo) == 1)
+			break ;
 		if (philo->state == EAT)
 		{
 			if (philo_try_to_eat(philo) != -1)
@@ -40,7 +39,8 @@ void	*philo(void *arg)
 		else if (philo->state == THINK)
 			philo_think(philo);
 	}
-	return (pthread_join(check_death, NULL), NULL);
+	pthread_join(check_death, NULL);
+	return (NULL);
 }
 
 static int	check_lim_meals(t_philo *philo)
@@ -51,7 +51,7 @@ static int	check_lim_meals(t_philo *philo)
 	if (philo->meals_eaten < philo->lim_meals)
 		return (0);
 	pthread_mutex_lock(philo->lim_eat_mut);
-	if (check_if_to_die(philo, 0) == 1)
+	if (check_if_any_dead(philo, 0) == 1)
 		return (pthread_mutex_unlock(philo->lim_eat_mut), 1);
 	if (philo->meals_eaten == philo->lim_meals && philo->state == SLEEP)
 		(*(philo->lim_eat_done))++;

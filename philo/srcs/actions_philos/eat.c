@@ -26,7 +26,7 @@ static int	philo_odd_try_eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->r_fork_mut);
 	if (check_if_any_dead(philo, 0) == 1)
-		return (pthread_mutex_unlock(philo->r_fork_mut)-1);
+		return (pthread_mutex_unlock(philo->r_fork_mut), -1);
 	pthread_mutex_lock(philo->mess_mut);
 	if (check_if_any_dead(philo, 1) == 1)
 		return (pthread_mutex_unlock(philo->r_fork_mut), -1);
@@ -76,8 +76,15 @@ void	philo_eat(t_philo *philo)
 	pthread_mutex_lock(philo->mess_mut);
 	if (check_if_any_dead(philo, 1) == 1)
 		return ;
+	pthread_mutex_lock(&(philo->time_mut));
+	if (check_if_any_dead(philo, 1) == 1)
+	{
+		pthread_mutex_unlock(&(philo->time_mut));
+		return ;
+	}
 	philo->last_meal = get_curr_time();
 	printf("%lu %li is eating\n", philo->last_meal, philo->ind_philo);
+	pthread_mutex_unlock(&(philo->time_mut));
 	pthread_mutex_unlock(philo->mess_mut);
 	usleep(philo->to_eat * 1000);
 	philo->state = SLEEP;
