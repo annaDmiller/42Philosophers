@@ -8,6 +8,6 @@ void    philo_think(t_philo *philo, long ind)
     printf("%lu %li is thinking\n", get_curr_time(), ind);
     sem_post(philo->mess_sem);
     philo->state = EAT;
-    usleep(1000);
+    usleep(100);
     return ;
 }
