@@ -50,6 +50,5 @@ void	philo_think(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 int		philo_try_to_eat(t_philo *philo);
 void	philo_eat(t_philo *philo);
-int	death_checker(t_philo *philo);
 void	*monitor_end(void *arg);
 #endif
