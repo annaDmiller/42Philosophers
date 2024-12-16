@@ -43,8 +43,9 @@ int	main(int argc, char **argv)
 
 static int	run_program(t_all *all)
 {
-	long	ind;
-	size_t	start;
+	long		ind;
+	size_t		start;
+	pthread_t	monitor;
 
 	ind = -1;
 	start = get_curr_time();
@@ -57,6 +58,7 @@ static int	run_program(t_all *all)
 			return (write_err("Thread creation failed"),
 				detach_thread(all, 0, ind), -1);
 	}
+	pthread_create(&(monitor), NULL, monitor_end, (void *) all);
 	ind = -1;
 	while (++ind < all->num_philos)
 	{
@@ -64,5 +66,6 @@ static int	run_program(t_all *all)
 			return (write_err("Error in thread joining"),
 				detach_thread(all, ind, all->num_philos), -1);
 	}
+	pthread_join(monitor, NULL);
 	return (0);
 }

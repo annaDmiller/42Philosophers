@@ -26,11 +26,8 @@ int	check_if_any_dead(t_philo *philo, int mess_locked)
 	return (check);
 }
 
-void	*death_checker(void *arg)
+int	death_checker(t_philo *philo)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *) arg;
 	while (1)
 	{
 		pthread_mutex_lock(&(philo->time_mut));
@@ -41,10 +38,10 @@ void	*death_checker(void *arg)
 		}
 		pthread_mutex_unlock(&(philo->time_mut));
 		if (philo->lim_meals != -1 && check_lim_meals(philo, 0) == 1)
-			return (NULL);
+			return (1);
 		pthread_mutex_lock(philo->dead_mut);
 		if (*philo->dead == 1)
-			return (pthread_mutex_unlock(philo->dead_mut), NULL);
+			return (pthread_mutex_unlock(philo->dead_mut), 1);
 		*philo->dead = 1;
 		pthread_mutex_unlock(philo->dead_mut);
 		pthread_mutex_lock(philo->mess_mut);
@@ -52,5 +49,5 @@ void	*death_checker(void *arg)
 		pthread_mutex_unlock(philo->mess_mut);
 		philo->state = DEAD;
 	}
-	return (NULL);
+	return (1);
 }

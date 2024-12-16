@@ -20,7 +20,6 @@ void	*philo(void *arg)
 	philo = (t_philo *) arg;
 	if (philo->lim_meals == 0)
 		return (NULL);
-	pthread_create(&check_death, NULL, death_checker, arg);
 	while (1)
 	{
 		if (check_if_any_dead(philo, 0) == 1)
@@ -37,7 +36,6 @@ void	*philo(void *arg)
 		else if (philo->state == THINK)
 			philo_think(philo);
 	}
-	pthread_join(check_death, NULL);
 	return (NULL);
 }
 

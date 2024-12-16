@@ -13,6 +13,7 @@ SRCS = 	./srcs/initialization.c \
 		./srcs/lexer.c \
 		./srcs/main_philo.c \
 		./srcs/main.c \
+		./srcs/monitor.c \
 
 SRCS +=	./srcs/actions_philos/eat.c \
 		./srcs/actions_philos/sleep.c \
