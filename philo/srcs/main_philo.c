@@ -48,9 +48,9 @@ int	check_lim_meals(t_philo *philo, int addit_check)
 	check = 0;
 	if (philo->meals_eaten < philo->lim_meals)
 		return (0);
-	pthread_mutex_lock(philo->lim_eat_mut);
 	if (addit_check == 1 && check_if_any_dead(philo, 0) == 1)
-		return (pthread_mutex_unlock(philo->lim_eat_mut), 1);
+		return (1);
+	pthread_mutex_lock(philo->lim_eat_mut);
 	if (addit_check == 1 && philo->meals_eaten == philo->lim_meals
 		&& philo->state == SLEEP)
 		(*(philo->lim_eat_done))++;

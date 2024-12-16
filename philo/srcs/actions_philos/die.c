@@ -40,7 +40,7 @@ void	*death_checker(void *arg)
 			continue ;
 		}
 		pthread_mutex_unlock(&(philo->time_mut));
-		if (check_lim_meals(philo, 0) == 1)
+		if (philo->lim_meals != -1 && check_lim_meals(philo, 0) == 1)
 			return (NULL);
 		pthread_mutex_lock(philo->dead_mut);
 		if (*philo->dead == 1)
