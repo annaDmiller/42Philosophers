@@ -24,7 +24,7 @@ int	validate_args(int argc, char **argv)
 		while (argv[ind_arg][++ind_car])
 		{
 			if (ind_car == 0 && argv[ind_arg][ind_car] == '-'
-				&& ft_isdigit(argv[ind_arg][ind_car + 1]))
+				&& ft_isdigit(argv[ind_arg][ind_car + 1]) && ind_arg != 1)
 				continue ;
 			if (!ft_isdigit(argv[ind_arg][ind_car]))
 			{
