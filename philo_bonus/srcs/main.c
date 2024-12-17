@@ -2,7 +2,6 @@
 
 static int	run_program(t_all *all);
 static int	wait_end(t_all *all, pid_t check_stop);
-static void	fork_failed(t_all *all, long ind);
 
 int	main(int argc, char **argv)
 {
@@ -29,62 +28,37 @@ int	main(int argc, char **argv)
 
 static int	run_program(t_all *all)
 {
-	long	ind;
-	pid_t	check_stop;
-	int		check;
+	pid_t	pid_monitor;
 
-	ind = -1;
 	all->philo->start = get_curr_time();
 	all->philo->last_meal = all->philo->start;
-	check = 0;
-	while (++ind < all->num_philos)
+	if (run_child_proc(all) == -1)
+		return (-1);
+	if (all->num_eat != -1)
 	{
-		all->pid_philo[ind] = fork();
-		if (all->pid_philo[ind] < 0)
-			return (fork_failed(all, ind), -1);
-		else if (all->pid_philo[ind] == 0)
+		pid_monitor = fork();
+		if (pid_monitor < 0)
 		{
-			if (run_philo(all->philo, ind + 1) == -1)
-			{
-				free_all(all, 1);
-				exit (1);
-			}
-			return (0);
+			fork_failed(all, all->num_philos);
+			return (-1);
 		}
+		else if (pid_monitor == 0)
+			monitor_meals(all);
 	}
-	check_stop = fork();
-	if (check_stop < 0)
-		fork_failed(all, all->num_philos);
-	else if (check_stop == 0)
-		run_check_stop(all);
-	else if (check_stop > 0)
-		wait_end(all, check_stop);
+	wait_end(all, pid_monitor);
 	return (0);
 }
 
-static int	wait_end(t_all *all, pid_t check_stop)
+static int	wait_end(t_all *all, pid_t pid_monitor)
 {
 	long	ind;
 
 	ind = -1;
 	sem_wait(all->stop_sem);
+	if (all->num_eat != -1)
+		kill(pid_monitor, SIGKILL);
 	while (++ind < all->num_philos)
 		kill(all->pid_philo[ind], SIGKILL);
-	kill(check_stop, SIGKILL);
 	printf("Simulation is stopped\n");
 	return (0);
-}
-
-static void	fork_failed(t_all *all, long ind)
-{
-	long	index;
-
-	index = -1;
-	sem_wait(all->mess_sem);
-	write_err("Impossible to create a child process");
-	while (++index < ind)
-		kill(all->pid_philo[index], SIGTERM);
-	printf("Simulation is stopped\n");
-	sem_post(all->mess_sem);
-	return ;
 }

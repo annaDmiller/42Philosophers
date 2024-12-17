@@ -32,9 +32,12 @@ size_t	transform_into_millisec(long time);
 int	run_philo(t_philo *philo, long ind);
 void    philo_sleep(t_philo *philo, long ind);
 void    philo_think(t_philo *philo, long ind);
-int	check_if_dead(t_philo *philo, long ind, int is_locked);
 int philo_try_to_eat(t_philo *philo, long ind);
 void    philo_eat(t_philo *philo, long ind);
-void    run_check_stop(t_all *all);
+void    monitor_meals(t_all *all);
+void	fork_failed(t_all *all, long stop_at);
+void    *monitor_death(void *arg);
+int run_child_proc(t_all *all);
+void	fork_failed(t_all *all, long stop_at);
 
 #endif

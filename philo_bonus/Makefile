@@ -13,13 +13,13 @@ SRCS = 	./srcs/lexer.c \
 		./srcs/main_philo.c \
 		./srcs/initialization.c \
 		./srcs/initialization_all_struct.c \
-		./srcs/check_process.c \
+		./srcs/monitor.c \
+		./srcs/init_child_proc.c \
 
 SRCS += ./srcs/finalization/error.c \
 		./srcs/finalization/free_logic.c \
 
-SRCS += ./srcs/actions_philos/die.c \
-		./srcs/actions_philos/eat.c \
+SRCS += ./srcs/actions_philos/eat.c \
 		./srcs/actions_philos/sleep.c \
 		./srcs/actions_philos/think.c \
 

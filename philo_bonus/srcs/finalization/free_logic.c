@@ -18,8 +18,6 @@ void    free_all(t_all *all, int unlink_sem)
         sem_close(all->stop_sem);
     if (all->ph_limit_sem)
         sem_close(all->ph_limit_sem);
-    if (all->block_sem)
-        sem_close(all->block_sem);
     if (unlink_sem)
         unlink_sems();
     if (all->pid_philo)
@@ -40,8 +38,8 @@ static void clean_philo(t_philo *philo)
         sem_close(philo->forks_sem);
     if (philo->limit_sem)
         sem_close(philo->limit_sem);
-    if (philo->block_sem)
-        sem_close(philo->block_sem);
+    if (philo->stop_sem)
+        sem_close(philo->stop_sem);
     free(philo);
     return ;
 }
@@ -54,6 +52,5 @@ void unlink_sems(void)
     sem_unlink(FORKS);
     sem_unlink(DEATH);
     sem_unlink(LIMITER);
-    sem_unlink(BLOCK);
     return ;
 }

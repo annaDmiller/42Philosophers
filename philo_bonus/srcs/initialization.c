@@ -62,6 +62,6 @@ static t_philo  *init_philos(t_all *all)
     ret->limit_sem = NULL;
     ret->meals_sem = NULL;
     ret->mess_sem = NULL;
-    ret->block_sem = NULL;
+    ret->stop_sem = NULL;
     return (ret);
 }
