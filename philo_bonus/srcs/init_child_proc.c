@@ -1,11 +1,11 @@
 #include "../includes/philo_bonus_header.h"
 
-int run_child_proc(t_all *all)
+int	run_child_proc(t_all *all)
 {
-    long    ind;
+	long	ind;
 
-    ind = -1;
-    while (++ind < all->num_philos)
+	ind = -1;
+	while (++ind < all->num_philos)
 	{
 		all->pid_philo[ind] = fork();
 		if (all->pid_philo[ind] < 0)
@@ -17,11 +17,11 @@ int run_child_proc(t_all *all)
 				free_all(all, 1);
 				exit (1);
 			}
-            free_all(all, 0);
-            exit(0);
+			free_all(all, 0);
+			exit(0);
 		}
 	}
-    return (0);
+	return (0);
 }
 
 void	fork_failed(t_all *all, long stop_at)

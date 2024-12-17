@@ -54,10 +54,8 @@ static int	run_program(t_all *all)
 	{
 		(all->philos[ind]).start = start;
 		(all->philos[ind]).last_meal = start;
-		if (pthread_create(&((all->philos[ind]).thread),
-				NULL, philo, (void *) &(all->philos[ind])) != 0)
-			return (write_err("Thread creation failed"),
-				detach_thread(all, 0, ind), -1);
+		pthread_create(&((all->philos[ind]).thread),
+			NULL, philo, (void *) &(all->philos[ind]));
 	}
 	pthread_create(&(monitor), NULL, monitor_end, (void *) all);
 	ind = -1;

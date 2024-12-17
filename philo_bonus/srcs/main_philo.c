@@ -31,36 +31,11 @@ int	run_philo(t_philo *philo, long ind)
 
 static int	open_sems(t_philo *philo)
 {
-	philo->dead_sem = sem_open(DEATH, 0);
-	if (philo->dead_sem == SEM_FAILED)
-		return (write_err("Impossible to open sema"), -1);
 	philo->forks_sem = sem_open(FORKS, 0);
-	if (philo->forks_sem == SEM_FAILED)
-		return (write_err("Impossible to open sema"), 
-			sem_close(philo->dead_sem), -1);
 	philo->mess_sem = sem_open(MESS, 0);
-	if (philo->mess_sem == SEM_FAILED)
-		return (write_err("Impossible to open sema"), 
-			sem_close(philo->dead_sem), 
-			sem_close(philo->forks_sem), -1);
 	philo->meals_sem = sem_open(MEALS, 0);
-	if (philo->meals_sem == SEM_FAILED)
-		return (write_err("Impossible to open sema"), 
-			sem_close(philo->dead_sem), 
-			sem_close(philo->forks_sem), 
-			sem_close(philo->mess_sem), -1);
 	philo->limit_sem = sem_open(LIMITER, 0);
-	if (philo->limit_sem == SEM_FAILED)
-		return (write_err("Impossible to open sema"), 
-			sem_close(philo->dead_sem), sem_close(philo->mess_sem),
-			sem_close(philo->forks_sem), 
-			sem_close(philo->meals_sem), -1);
 	philo->stop_sem = sem_open(END, 0);
-	if (philo->stop_sem == SEM_FAILED)
-		return (write_err("Impossible to open sema"), 
-			sem_close(philo->dead_sem), sem_close(philo->mess_sem),
-			sem_close(philo->forks_sem), sem_close(philo->limit_sem), 
-			sem_close(philo->meals_sem), -1);
 	return (0);
 }
 

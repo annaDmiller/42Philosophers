@@ -1,5 +1,5 @@
-#ifndef PHILO_BONUS_STRRUCTURES_H
-# define PHILO_BONUS_STRRUCTURES_H
+#ifndef PHILO_BONUS_STRUCTURES_H
+# define PHILO_BONUS_STRUCTURES_H
 # define MESS "/message_sem"
 # define END "/end_sem"
 # define DEATH "/death_sem"
@@ -40,7 +40,6 @@ typedef struct s_philo
 	long		meals_eaten;
 	long		ind;
 	sem_t		*mess_sem;
-	sem_t		*dead_sem;
 	sem_t		*meals_sem;
 	sem_t		*forks_sem;
 	sem_t		*limit_sem;
@@ -59,8 +58,7 @@ typedef struct s_all
 	long			num_eat;
 	int				is_dead;
 	long			philo_meals;
-	sem_t	        *mess_sem;
-	sem_t	        *dead_sem;
+	sem_t			*mess_sem;
 	sem_t			*meals_sem;
 	sem_t			*stop_sem;
 	sem_t			*ph_limit_sem;
