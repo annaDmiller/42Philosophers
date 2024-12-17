@@ -60,11 +60,7 @@ static int	run_program(t_all *all)
 	pthread_create(&(monitor), NULL, monitor_end, (void *) all);
 	ind = -1;
 	while (++ind < all->num_philos)
-	{
-		if (pthread_join((all->philos[ind]).thread, NULL) != 0)
-			return (write_err("Error in thread joining"),
-				detach_thread(all, ind, all->num_philos), -1);
-	}
+		pthread_join((all->philos[ind]).thread, NULL);
 	pthread_join(monitor, NULL);
 	return (0);
 }
