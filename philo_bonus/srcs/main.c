@@ -30,6 +30,7 @@ static int	run_program(t_all *all)
 {
 	pid_t	pid_monitor;
 
+	printf("Launch of program at %lu\n", get_curr_time());
 	all->philo->start = get_curr_time();
 	all->philo->last_meal = all->philo->start;
 	if (run_child_proc(all) == -1)
