@@ -44,5 +44,11 @@ static int	init_sema_all(t_all *all)
 		return (write_err("Open stop sema failed"),
 			sem_close(all->mess_sem), sem_unlink(MESS),
 			sem_close(all->meals_sem), sem_unlink(MEALS), -1);
+	all->q_sem = sem_open(QUEUE, O_CREAT, 0644, 1);
+	if (all->stop_sem == SEM_FAILED)
+		return (write_err("Open queue sema failed"),
+			sem_close(all->mess_sem), sem_unlink(MESS),
+			sem_close(all->meals_sem), sem_unlink(MEALS),
+			sem_close(all->stop_sem), sem_unlink(END), -1);
 	return (0);
 }

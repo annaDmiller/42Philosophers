@@ -62,5 +62,6 @@ static t_philo	*init_philos(t_all *all)
 	ret->meals_sem = NULL;
 	ret->mess_sem = NULL;
 	ret->stop_sem = NULL;
+	ret->q_sem = NULL;
 	return (ret);
 }

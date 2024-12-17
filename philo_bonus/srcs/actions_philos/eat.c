@@ -19,7 +19,9 @@ int	philo_try_to_eat(t_philo *philo, long ind)
 
 static int	try_take_fork(t_philo *philo, long ind)
 {
+	sem_wait(philo->q_sem);
 	sem_wait(philo->forks_sem);
+	sem_post(philo->q_sem);
 	sem_wait(philo->mess_sem);
 	if (philo->state == DEAD)
 		return (sem_post(philo->forks_sem), sem_post(philo->mess_sem), -1);
@@ -48,5 +50,7 @@ void	philo_eat(t_philo *philo, long ind)
 	sem_post(philo->forks_sem);
 	sem_post(philo->forks_sem);
 	sem_post(philo->limit_sem);
+	if (philo->meals_eaten == philo->num_meals)
+		sem_post(philo->meals_sem);
 	return ;
 }

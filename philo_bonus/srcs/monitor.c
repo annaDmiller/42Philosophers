@@ -13,12 +13,9 @@ void	monitor_meals(t_all *all)
 	ind = -1;
 	while (++ind < all->num_philos)
 		sem_wait(meals);
-	if (ind == all->num_philos)
-	{
-		sem_wait(mess);
-		printf("Philosophers ate enough time\n");
-		sem_post(end);
-	}
+	sem_wait(mess);
+	printf("Philosophers ate enough time\n");
+	sem_post(end);
 	sem_close(meals);
 	sem_close(end);
 	free_all(all, 0);
