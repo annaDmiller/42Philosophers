@@ -16,6 +16,7 @@ static int	try_take_fork(t_philo *philo, long ind);
 
 int	philo_try_to_eat(t_philo *philo, long ind)
 {
+	sem_wait(philo->q_sem);
 	sem_wait(philo->limit_sem);
 	if (try_take_fork(philo, ind) == -1)
 		return (-1);
@@ -26,14 +27,13 @@ int	philo_try_to_eat(t_philo *philo, long ind)
 	}
 	if (try_take_fork(philo, ind) == -1)
 		return (sem_post(philo->forks_sem), -1);
+	sem_post(philo->q_sem);
 	return (0);
 }
 
 static int	try_take_fork(t_philo *philo, long ind)
 {
-	sem_wait(philo->q_sem);
 	sem_wait(philo->forks_sem);
-	sem_post(philo->q_sem);
 	sem_wait(philo->mess_sem);
 	if (philo->state == DEAD)
 		return (sem_post(philo->forks_sem), sem_post(philo->mess_sem), -1);
