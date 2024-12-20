@@ -33,10 +33,11 @@ int	main(int argc, char **argv)
 	if (run_program(all) == -1)
 		return (free_all(all, 1), 1);
 	if (all->is_dead == 1)
-		printf("Reason of finish: One or more philosophers are dead\n");
+		printf("One or more philosophers died\n");
 	else if (argc == 6 && ((all->fin).num_philo_eaten == all->num_philos
 			|| all->num_eat == 0))
-		printf("Reason of finish: All philosophers ate enough times\n");
+		printf("All philosophers ate enough times\n");
+	printf("Simulation is stopped\n");
 	free_all(all, 1);
 	return (0);
 }
