@@ -12,9 +12,9 @@
 
 #include "../includes/philo_header.h"
 
-static pthread_mutex_t	*init_forks(t_all *all);
-static t_philo			*init_philos(t_all *all);
-static void				init_l_r_forks(t_all *all, long ind, t_philo *philo);
+static t_fork	*init_forks(t_all *all);
+static t_philo	*init_philos(t_all *all);
+static void		init_l_r_forks(t_all *all, long ind, t_philo *philo);
 
 int	init_forks_and_philos(t_all *all)
 {
@@ -27,18 +27,22 @@ int	init_forks_and_philos(t_all *all)
 	return (0);
 }
 
-static pthread_mutex_t	*init_forks(t_all *all)
+static t_fork	*init_forks(t_all *all)
 {
-	pthread_mutex_t	*ret;
-	long			ind;
+	t_fork	*ret;
+	long	ind;
 
-	ret = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * all->num_philos);
+	ret = (t_fork *) malloc(sizeof(t_fork) * all->num_philos);
 	if (!ret)
 		return (write_err("Malloc error"), NULL);
 	ind = -1;
 	while (++ind < all->num_philos)
 	{
-		if (pthread_mutex_init(&(ret[ind]), NULL) == -1)
+		if (ind % 2 == 0)
+			ret[ind].queue = ind + 1;
+		else
+			ret[ind].queue = ind;
+		if (pthread_mutex_init(&(ret[ind].fork_mut), NULL) == -1)
 			return (write_err("Mutex init error"),
 				mut_destroy(ret, ind), free(ret), NULL);
 	}

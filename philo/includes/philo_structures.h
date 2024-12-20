@@ -29,6 +29,12 @@ typedef struct s_fin
 	pthread_mutex_t	mut;
 }					t_fin;
 
+typedef struct s_fork
+{
+	long			queue;
+	pthread_mutex_t	fork_mut;
+}					t_fork;
+
 typedef struct s_philo
 {
 	pthread_t		thread;
@@ -46,15 +52,15 @@ typedef struct s_philo
 	int				*lim_eat_done;
 	pthread_mutex_t	*mess_mut;
 	pthread_mutex_t	*lim_eat_mut;
-	pthread_mutex_t	*r_fork_mut;
-	pthread_mutex_t	*l_fork_mut;
+	t_fork			*r_fork_mut;
+	t_fork			*l_fork_mut;
 	pthread_mutex_t	*dead_mut;
 	pthread_mutex_t	time_mut;
 }					t_philo;
 
 typedef struct s_all
 {
-	pthread_mutex_t	*forks;
+	t_fork			*forks;
 	struct s_philo	*philos;
 	long			to_sleep;
 	long			to_eat;

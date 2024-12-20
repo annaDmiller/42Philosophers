@@ -19,7 +19,7 @@ void	philo_think(t_philo *philo)
 		return ;
 	printf("%lu %li is thinking\n", get_curr_time(), philo->ind_philo);
 	pthread_mutex_unlock(philo->mess_mut);
-	usleep(100);
+	usleep(20);
 	philo->state = EAT;
 	return ;
 }

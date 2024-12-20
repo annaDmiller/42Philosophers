@@ -30,14 +30,14 @@ void	free_all(t_all *all, int destroy_forks)
 	return ;
 }
 
-void	mut_destroy(pthread_mutex_t *forks, long stop_at)
+void	mut_destroy(t_fork *forks, long stop_at)
 {
 	long	ind;
 
 	ind = 0;
 	while (ind < stop_at)
 	{
-		pthread_mutex_destroy(&(forks[ind]));
+		pthread_mutex_destroy(&(forks[ind].fork_mut));
 		ind++;
 	}
 	return ;
