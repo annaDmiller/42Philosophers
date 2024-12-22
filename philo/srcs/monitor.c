@@ -51,7 +51,6 @@ static int	death_checker(t_philo *philo)
 		pthread_mutex_lock(philo->mess_mut);
 		printf("%lu %li died\n", get_curr_time(), philo->ind_philo);
 		pthread_mutex_unlock(philo->mess_mut);
-		philo->state = DEAD;
 	}
 	return (1);
 }
