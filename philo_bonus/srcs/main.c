@@ -45,9 +45,9 @@ static int	run_program(t_all *all)
 	printf("Launch of program at %lu\n", get_curr_time());
 	all->philo->start = get_curr_time();
 	all->philo->last_meal = all->philo->start;
-	if (run_child_proc(all) == -1)
+	if (all->num_eat != 0 && run_child_proc(all) == -1)
 		return (-1);
-	if (all->num_eat != -1)
+	if (all->num_eat != -1 && all->num_eat != 0)
 	{
 		pid_monitor = fork();
 		if (pid_monitor < 0)
@@ -67,11 +67,16 @@ static int	wait_end(t_all *all, pid_t pid_monitor)
 	long	ind;
 
 	ind = -1;
-	sem_wait(all->stop_sem);
-	if (all->num_eat != -1)
-		kill(pid_monitor, SIGKILL);
-	while (++ind < all->num_philos)
-		kill(all->pid_philo[ind], SIGKILL);
+	if (all->num_eat)
+	{
+		sem_wait(all->stop_sem);
+		if (all->num_eat != -1)
+			kill(pid_monitor, SIGKILL);
+		while (++ind < all->num_philos)
+			kill(all->pid_philo[ind], SIGKILL);
+	}
+	if (all->num_eat == 0)
+		printf("All philosophers ate enough time\n");
 	printf("Simulation is stopped\n");
 	return (0);
 }

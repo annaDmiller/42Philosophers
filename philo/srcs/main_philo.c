@@ -18,8 +18,6 @@ void	*philo(void *arg)
 	pthread_t	check_death;
 
 	philo = (t_philo *) arg;
-	if (philo->lim_meals == 0)
-		return (NULL);
 	while (1)
 	{
 		if (check_if_any_dead(philo, 0) == 1)

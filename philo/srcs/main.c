@@ -51,6 +51,8 @@ static int	run_program(t_all *all)
 	ind = -1;
 	start = get_curr_time();
 	printf("Launch of program at %lu\n", start);
+	if (all->num_eat == 0)
+		return (0);
 	while (++ind < all->num_philos)
 	{
 		(all->philos[ind]).start = start;
